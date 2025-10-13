@@ -4,13 +4,11 @@
 
 I detta projekt tänker jag lösa 'LunarLander' miljön med två metoder: DQN (Deep Q Network) och PPO (Proximal Policy Optimization).
 
-Issues installing box2d on windows, maybe colab instead or rahti notebooks
-
-Testing with colab
-
 Vi måste anpassa våra parametrar, episoder, steps mm. för att skapa en bra grund för hitta en bra policy per metoder (DQN, PPO).
 
-Vi använder färdigt implementerade bibliotek med DQN och PPO, via stable_baselines3
+Vi använder färdigt implementerade bibliotek med DQN och PPO, via stable_baselines3.
+
+Vi jobbar i google colab för att inträna modellerna samt visualisera modellernas inträning. Lokallt testar, filmar och evaluerar modellerna.
 
 ### DQN - Deep Q Network
 
@@ -25,29 +23,13 @@ PPO förbättrar sig effektivare genom att begränsa hur policyn ändrar sig vid
 
 ### Resultat
 
-#### LunarLander med DQN
+### LunarLander med DQN
 
-Klarar sig inte så bra, svårt att lösa med DQN: vad är det bästa jag kan göra här?
+Tränings visulalisering
+
+![DQN Träning](/assets/dqn_training.png)
 
 ```Python
-dqn_model = DQN(
-    "MlpPolicy",
-    env,
-    learning_rate=1e-4,
-    buffer_size=100000,
-    learning_starts=10000,
-    batch_size=64,
-    gamma=0.99,
-    train_freq=4,
-    target_update_interval=1000,
-    exploration_fraction=0.1,
-    exploration_final_eps=0.05,
-    verbose=0,
-    policy_kwargs=dict(net_arch=[64, 64]),
-)
-
-dqn_model.learn(total_timesteps=2_000_000, callback=eval_callback)
-
 # Bättre
 dqn_model = DQN(
     "MlpPolicy",
@@ -68,27 +50,30 @@ dqn_model = DQN(
 dqn_model.learn(total_timesteps=2_000_000, callback=eval_callback)
 ```
 
+### DQN Modell Evaluering
 
 ```Python
-Mean reward: 154.8678681 +/- 80.60501831093475
-
 # Bättre
 Mean reward: 252.92582385000006 +/- 45.51575735288412
 ```
 
-#### Visuel Test
+### Visuel Test
 
 ![DQN körning](/assets/dqn_lunarlander_run.gif)
 
-Inte så värst bra, når inte 200+ mean reward
+Klarar sig nog bra av miljön.
 
-#### LunarLander med PPO
+### LunarLander med PPO
+
+Tränings visulalisering
+
+![DQN Träning](/assets/ppo_training.png)
 
 Passar sig mycket bättre för lunar lander, eftersom det är en mera komplicerad miljö som PPO är bättre på och pga att den är policy baserad: hur ska agenten agera beroende på sin situation.
 
 800 000 timesteps räcker för träning
 
-#### Parametrar:
+### Parametrar:
 
 ```Python
 ppo_model = PPO(
@@ -110,16 +95,16 @@ ppo_model = PPO(
 ppo_model.learn(total_timesteps=1_500_000, callback=eval_callback)
 ```
 
-Efter inträning:
+### PPO Modell Evaluering
 
 ```Python
 Mean reward: 252.22737134999997 +/- 49.11030609688438
 ```
 
-#### Testande hur modellen klarar sig
+### Testande hur modellen klarar sig
 
 ![Gif av en körning](/assets/ppo_lunarlander_run.gif)
 
 Inte helt perfekt men den klarar sig nog ofta att landa!
 
-#### Gemförelse
+### Gemförelse
