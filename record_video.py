@@ -3,8 +3,8 @@ import imageio
 from stable_baselines3 import DQN, PPO
 
 env = gym.make("LunarLander-v3", render_mode="rgb_array")
-model = PPO.load(".\models\ppo_lunar_lander")
-#model = DQN.load(".\models\dqn_lunar_lander")
+#model = DQN.load(".\DQN_TRAINING\dqn_lunar_lander_2")
+model = PPO.load(".\PPO_TRAINING\ppo_lunar_lander(1)")
 
 
 num_episodes = 3
@@ -23,8 +23,8 @@ for i in range(num_episodes):
     for _ in range(10):
         all_frames.append(all_frames[-1])
 
-#path = "./assets/dqn_lunarlander_run.gif"
-path = "./assets/ppo_lunarlander_run.gif"
+#path = "./assets/dqn_lunarlander_run_2.gif"
+path = "./assets/ppo_lunarlander_run_2.gif"
 
 # Save as combined video
 imageio.mimsave(path, all_frames, fps=30)
