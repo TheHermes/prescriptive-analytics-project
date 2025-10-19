@@ -4,7 +4,7 @@
 
 Syftet med projektet är att reinforcement learning genom att träna agentbaserade modeller att landa ett rymdfarkost i OpenAI gym miljö LunarLander. Fokuset ligger i att lösa miljön med två RL-metoder DQN (Deep Q Network) och PPO (Proximal Policy Optimization), träna dom, analysera resultat och gemföra resultaten.
 
-LunarLander är en miljö var en agent ska landa ett rymdfarkost net i ett markerat område utan att krascha. [Länk till sida om LunarLander](https://gymnasium.farama.org/environments/box2d/lunar_lander/)
+LunarLander är en miljö var en agent ska landa ett rymdfarkost ner i ett markerat område utan att krascha. [Länk till sida om LunarLander](https://gymnasium.farama.org/environments/box2d/lunar_lander/)
 
 Varje modell tränas i 2 miljoner steg och under träningen använder vi oss av en eval_callback funktion för att verifiera hur bra inträningen går samt spara den bästa modellen.
 
@@ -79,15 +79,15 @@ PPO förbättrar sig effektivare genom att begränsa hur policyn ändrar sig vid
 
 ### LunarLander med PPO
 
-Tränings visulalisering
+Tränings visualisering
 
 ![PPO Träning](/assets/ppo_training.png)
 
-Träningen med PPO är mycket smidigare och snabbare. Dess belöningar stiger snabbt till höga nivåer men sedan når den inte längre efter en stund, 2 miljoner steg är helt för mycket.
+Träningen med PPO är mycket smidigare och snabbare. Dess belöningar stiger snabbt till höga nivåer men sedan når den inte längre efter en stund, 2 miljoner steg är helt för mycket träning.
 
 Passar sig mycket bättre för lunar lander, eftersom det är en mera komplicerad miljö som PPO är bättre på och pga att den är policy baserad: hur ska agenten agera beroende på sin situation.
 
-800 000 timesteps räcker för träning
+800 000 timesteps räcker för träning.
 
 ### Parametrar:
 
