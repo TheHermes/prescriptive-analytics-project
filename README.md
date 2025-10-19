@@ -2,19 +2,17 @@
 
 ## Lunar Lander
 
-Syftet med projektet är att reinforcement learning genom att träna agentbaserade modeller att landa ett rymdfarkost i OpenAI gym miljö LunarLander. Fokuset ligger i att lösa miljön med två RL-metoder DQN (Deep Q Network) och PPO (Proximal Policy Optimization), träna dom, analysera resultat och gemföra resultaten.
+Syftet med projektet är med hjälp av reinforcement learning träna agentbaserade modeller att landa ett rymdfarkost i OpenAI gym miljön Lunar Lander. Fokuset ligger i att lösa miljön med två RL-metoder DQN (Deep Q Network) och PPO (Proximal Policy Optimization), träna dom, analysera och jämföra resultaten. Med lösa menar jag egentligen skapa den bästa modellen jag kan.
 
-LunarLander är en miljö var en agent ska landa ett rymdfarkost ner i ett markerat område utan att krascha. [Länk till sida om LunarLander](https://gymnasium.farama.org/environments/box2d/lunar_lander/)
+Lunar Lander är en miljö var en agent ska landa ett rymdfarkost ner i ett markerat område utan att krascha och innan episoden är slut. [Länk till sida om LunarLander](https://gymnasium.farama.org/environments/box2d/lunar_lander/)
 
 Varje modell tränas i 2 miljoner steg och under träningen använder vi oss av en eval_callback funktion för att verifiera hur bra inträningen går samt spara den bästa modellen.
 
 Vi måste anpassa våra parametrar, episoder, steps mm. för att skapa en bra grund för hitta en bra policy per metoder (DQN, PPO).
 
-Vi använder färdigt implementerade bibliotek med DQN och PPO, via stable_baselines3.
+Vi använder färdigt implementerade bibliotek för DQN och PPO, via stable_baselines3 för att träna och utvärdera modellerna.
 
-Vi jobbar i google colab för att inträna modellerna samt visualisera modellernas inträning. Lokallt testar, filmar och evaluerar modellerna. Jag inkluderar också ipynb filen från colab om inte colab fungerar.
-
-Lokallt körde jag med anaconda, eftersom det var ända sättet att köra box2d miljön på windows problemfritt. [Gymnasium paketet för anaconda jag använde.](https://anaconda.org/conda-forge/gymnasium-box2d)
+Vi jobbar i google colab för att träna modellerna samt visualisera modellernas inträning. Lokalt testar, filmar och evaluerar vi modellerna. Jag inkluderar också ipynb filen från colab om inte colab fungerar. Lokalt körde jag med anaconda, eftersom det var ända sättet att köra box2d miljön på windows problemfritt. [Gymnasium paketet för anaconda jag använde.](https://anaconda.org/conda-forge/gymnasium-box2d)
 
 ### Tränings kod
 
@@ -34,11 +32,11 @@ Baserad på Q-learning, men istället för att använda Q-tabellen använder vi 
 
 ### LunarLander med DQN
 
-Tränings visualisering
+#### Tränings visualisering
 
 ![DQN Träning](/assets/dqn_training.png)
 
-Träningen är lite hackig och hittar aldrig en smidig träning. Vi når ändå en genomsnittlig belöning på över 200.
+Träningen är lite hackig och hittar aldrig en smidig träning. Vi når ändå en genomsnittlig belöning på över 200 mot slutet.
 
 Parametrarna hittades genom testande med optuna, informations sökning och AI stöd.
 
@@ -76,13 +74,13 @@ Klarar sig bra inte helt perfekt men löser det ofta!
 
 ### PPO - Proximal Policy Optimization
 
-PPO är en policybaserad metod inom reinforcement learning. Den lär sig direkt en policy i gemförelse med DQN som beräknar Q-värden.
+PPO är en policybaserad metod inom reinforcement learning. Den lär sig direkt en policy i jämförelse med DQN som beräknar Q-värden.
 
-PPO förbättrar sig effektivare genom att begränsa hur policyn ändrar sig vid varje uppdatering. Detta skapar en stabil och pålitlig inlärning.
+PPO förbättrar sig effektivare genom att begränsa hur policyn ändrar sig vid varje uppdatering. Detta skapar en stabil och pålitlig inlärning, vilket hindrar stora och drastiska ändringar till policyn.
 
 ### LunarLander med PPO
 
-Tränings visualisering
+#### Tränings visualisering
 
 ![PPO Träning](/assets/ppo_training.png)
 
@@ -126,14 +124,16 @@ Mean reward: 281.89231415000006 +/- 32.58030784277455
 
 Inte helt perfekt men den klarar sig nog att landa!
 
-### Gemförelse och slutsats
+### Jämförelse och Slutsats
 
 |Modell|Mean Reward|Std|Timesteps|Kommentar|
 |------|-----------|---|---------|---------|
 |DQN|263.3|±38.2|2M|Ostadig inlärning, lär sig långsamt, borde tränas även längre, kanske även inte använda för denna miljö|
-|PPO|281.9|±32.6|2M (800k räcker)|Snabb och stadig inlärning, når sitt bästa snabbt|
+|PPO|281.9|±32.6|2M (800k räcker)|Snabb och stadig inlärning, når sitt bästa snabbt, passar välidgt bra för denna miljö|
 
-PPO fungerar bättre eftersom den uppdaterar policyn genom att klippa gradienterna (clip range) och skapa en stabilare policy ändring. Detta förhindrar stora ändringar i policy och gör den mer sample-effektiv. DQN däremot är känslig för hyperparametrar och fungerar sämre i kontinuerliga tillståndsrum. DQN kämpar med stabilitet och borde antingen ändra på parametrarna eller träna ännu mera.
+PPO presterar betydligt mycket bättre än DQN i denna miljö. Den når snabbare högre belöningar och når bättre resultat. DQN lär sig, men långsammare och ostadigt.
+
+PPO fungerar bättre, eftersom den uppdaterar policyn genom att klippa gradienterna (clip range) och skapa en stabilare ändring i policyn. Detta förhindrar stora ändringar i policy och gör den mera effektiv. DQN däremot är känslig för hyperparametrar och fungerar sämre i kontinuerliga tillståndsrum. DQN kämpar med stabilitet och borde antingen ändra på parametrarna eller träna ännu mera.
 
 Både DQN och PPO metoderna lyckades med att landa farkosten, men PPO visade sig vara överlägset bättre i sin prestanda. PPO lär sig stabilare och snabbare medan DQN inte lär sig stabilt och det tar längre tid att blir bättre. Valet av metoden oftast är det viktigaste när man väljer en metod för att träna för att få bra resultat.
 
