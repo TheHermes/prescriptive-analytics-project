@@ -23,12 +23,12 @@ Jag tränade modellerna i colab.
 ## Resultat
 
 Båda modellerna finns i varsin training katalog i logs under namnet best_model.zip
-I training katalogen finns också en modell av den sista tränade modellen. Vi använde best_model för evaluering, testning visuellt och inspelning.
+I training katalogen finns också en modell av den sista tränade modellen. Vi använder best_model för evaluering, testning visuellt och inspelning.
 
 ### DQN - Deep Q Network
 
 DQN är ett värde baserat reinforcement learning algoritm.
-Baserad på Q-learning, men istället för att använda Q-tabellen använder vi ett neuralt nätverk istället. Passar sig bättre för simplare miljöer med diskreta handlingar. Kanske inte den bästa för Lunar Lander men vi testar hur det går.
+Baserad på Q-learning, men istället för att använda Q-tabellen använder vi ett neuralt nätverk istället. Passar sig bättre för simplare miljöer med diskreta handlingar. Kanske inte den bästa för Lunar Lander men vi testar hur det går och ser om vi kan få bra resultat.
 
 ### LunarLander med DQN
 
@@ -36,7 +36,7 @@ Baserad på Q-learning, men istället för att använda Q-tabellen använder vi 
 
 ![DQN Träning](/assets/dqn_training.png)
 
-Träningen är lite hackig och hittar aldrig en smidig träning. Vi når ändå en genomsnittlig belöning på över 200 mot slutet.
+Träningen är lite hackig och hittar aldrig en smidig och konsekvent träning. Vi når ändå en genomsnittlig belöning på över 200 mot slutet.
 
 Parametrarna hittades genom testande med optuna, informations sökning och AI stöd.
 
@@ -70,7 +70,7 @@ Mean reward: 263.33771715 +/- 38.206357018073966
 
 ![DQN körning](/assets/dqn_lunarlander_run_2.gif)
 
-Klarar sig bra inte helt perfekt men löser det ofta!
+Klarar sig bra inte helt perfekt men löser det ofta! Mere träning möjligen för att skapa bättre resultat? Eller ännu mera optimering med hyperparametrarna.
 
 ### PPO - Proximal Policy Optimization
 
@@ -84,13 +84,15 @@ PPO förbättrar sig effektivare genom att begränsa hur policyn ändrar sig vid
 
 ![PPO Träning](/assets/ppo_training.png)
 
-Träningen med PPO är mycket smidigare och snabbare. Dess belöningar stiger snabbt till höga nivåer men sedan når den inte längre efter en stund, 2 miljoner steg är helt för mycket träning.
+Träningen med PPO är mycket smidigare och snabbare. Dess belöningar stiger snabbt till höga nivåer men sedan når den inte längre efter en stund, 2 miljoner steg är helt för mycket träning. Men vi når snabbt ett bra och högt belöning som hålls relativt stadigt efter 800 000 steg.
 
-Passar sig mycket bättre för lunar lander, eftersom det är en mera komplicerad miljö som PPO är bättre på och pga att den är policy baserad: hur ska agenten agera beroende på sin situation.
+PPO metoden passar sig mycket bättre för lunar lander, eftersom det är en mera komplicerad miljö som PPO är bättre på och pga att den är policy baserad: hur ska agenten agera beroende på sin situation.
 
 800 000 timesteps räcker för träning.
 
 ### Parametrar:
+
+Parametrarna hittades genom testande med optuna, informations sökning och AI stöd.
 
 ```Python
 ppo_model = PPO(
@@ -131,14 +133,20 @@ Inte helt perfekt men den klarar sig nog att landa!
 |DQN|263.3|±38.2|2M|Ostadig inlärning, lär sig långsamt, borde tränas även längre, kanske även inte använda för denna miljö|
 |PPO|281.9|±32.6|2M (800k räcker)|Snabb och stadig inlärning, når sitt bästa snabbt, passar välidgt bra för denna miljö|
 
-PPO presterar betydligt mycket bättre än DQN i denna miljö. Den når snabbare högre belöningar och når bättre resultat. DQN lär sig, men långsammare och ostadigt.
+PPO presterar betydligt mycket bättre än DQN i denna miljö. Den når snabbare högre belöningar och når bättre resultat. DQN lär sig, men långsammare och ostadigt. DQN kanske borde inte användas och undvikas i denna miljö utan endas använde den i enklare miljöer som något i toytext i gymnasium.
 
 PPO fungerar bättre, eftersom den uppdaterar policyn genom att klippa gradienterna (clip range) och skapa en stabilare ändring i policyn. Detta förhindrar stora ändringar i policy och gör den mera effektiv. DQN däremot är känslig för hyperparametrar och fungerar sämre i kontinuerliga tillståndsrum. DQN kämpar med stabilitet och borde antingen ändra på parametrarna eller träna ännu mera.
 
 Både DQN och PPO metoderna lyckades med att landa farkosten, men PPO visade sig vara överlägset bättre i sin prestanda. PPO lär sig stabilare och snabbare medan DQN inte lär sig stabilt och det tar längre tid att blir bättre. Valet av metoden oftast är det viktigaste när man väljer en metod för att träna för att få bra resultat.
+
+Vi kan som fortsatt arbete möjligen och vidare utveckla genom att testa på andra metoder som finns och utforska om det finns en som är ännu bättre än dessa två. Vi kan också försöka finslipa och göra DQN bättre genom optimering och hitta balans på parametrarna.
 
 Länkar som använts:
 
 [DQN Stable baselines](https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html)
 
 [PPO Stable baselines](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)
+
+Studie material från itslearning.
+
+I projektet har AI använts som stöd och hjälp och för att t.ex. hjälpa skapa inspelnings python filen.
