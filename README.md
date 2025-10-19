@@ -12,7 +12,7 @@ Vi måste anpassa våra parametrar, episoder, steps mm. för att skapa en bra gr
 
 Vi använder färdigt implementerade bibliotek med DQN och PPO, via stable_baselines3.
 
-Vi jobbar i google colab för att inträna modellerna samt visualisera modellernas inträning. Lokallt testar, filmar och evaluerar modellerna.
+Vi jobbar i google colab för att inträna modellerna samt visualisera modellernas inträning. Lokallt testar, filmar och evaluerar modellerna. Jag inkluderar också ipynb filen från colab om inte colab fungerar.
 
 Lokallt körde jag med anaconda, eftersom det var ända sättet att köra box2d miljön på windows problemfritt. [Gymnasium paketet för anaconda jag använde.](https://anaconda.org/conda-forge/gymnasium-box2d)
 
@@ -23,6 +23,9 @@ Jag tränade modellerna i colab.
 [Google Colab Länk](https://colab.research.google.com/drive/1brESnGEeAx9zn20RFZzVxKWi-MrcQixH?usp=sharing)
 
 ## Resultat
+
+Båda modellerna finns i varsin training katalog i logs under namnet best_model.zip
+I training katalogen finns också en modell av den sista tränade modellen. Vi använde best_model för evaluering, testning visuellt och inspelning.
 
 ### DQN - Deep Q Network
 

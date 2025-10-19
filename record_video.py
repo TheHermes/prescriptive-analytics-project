@@ -4,7 +4,10 @@ from stable_baselines3 import DQN, PPO
 
 env = gym.make("LunarLander-v3", render_mode="rgb_array")
 #model = DQN.load(".\DQN_TRAINING\dqn_lunar_lander_2")
-model = PPO.load(".\PPO_TRAINING\ppo_lunar_lander(1)")
+#model = PPO.load(".\PPO_TRAINING\ppo_lunar_lander(1)")
+
+#model = DQN.load("./DQN_TRAINING/logs/best_model")
+model = PPO.load("./PPO_TRAINING/logs/best_model")
 
 
 num_episodes = 3
